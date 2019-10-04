@@ -4,6 +4,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,6 +43,32 @@ public class MainActivity extends AppCompatActivity {
         //Instanciando o Adapter e vinculando-o ao RecyclerView
         adapterExemplo = new AdapterExemplo(listaItens);
         recyclerViewExemplo.setAdapter(adapterExemplo);
+
+        recyclerViewExemplo.addOnItemTouchListener(new RecyclerItemClickListener(
+                this,
+                recyclerViewExemplo,
+                new RecyclerItemClickListener.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(View view, int position) {
+                        Item item = listaItens.get(position);
+                        Toast.makeText(
+                                MainActivity.this,
+                                "Você clicou no item número " + item.getTextNumeroItem(),
+                                Toast.LENGTH_SHORT
+                        ).show();
+                    }
+
+                    @Override
+                    public void onLongItemClick(View view, int position) {
+
+                    }
+
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                    }
+                }
+        ));
     }
 
     //Criando base de dados
